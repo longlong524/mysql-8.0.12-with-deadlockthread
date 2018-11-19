@@ -1,6 +1,6 @@
 
 
-# 为mysql增加了一个deadlock thread 定期检测死锁，关闭同步检测死锁的功能。
+#  为mysql增加了一个deadlock thread 定期检测死锁，关闭同步检测死锁的功能。
 
 # 设计初衷
 mysql的同步检测死锁耗费过多的cpu，极端情况还会引起大量不必要的锁竞争。
