@@ -1,6 +1,6 @@
-diff -upr ../mysql-8.0.13/storage/innobase/btr/btr0cur.cc /root/mysql-8.0.13/storage/innobase/btr/btr0cur.cc
---- ../mysql-8.0.13/storage/innobase/btr/btr0cur.cc	2018-10-07 16:44:22.000000000 +0800
-+++ /root/mysql-8.0.13/storage/innobase/btr/btr0cur.cc	2018-12-17 01:19:03.839701488 +0800
+diff -upr mysql-8.0.13/storage/innobase/btr/btr0cur.cc mysql-8.0.13_2/storage/innobase/btr/btr0cur.cc
+--- mysql-8.0.13/storage/innobase/btr/btr0cur.cc	2018-12-19 01:27:19.105559553 +0800
++++ mysql-8.0.13_2/storage/innobase/btr/btr0cur.cc	2018-12-19 01:38:57.312138707 +0800
 @@ -3694,6 +3694,7 @@ dberr_t btr_cur_optimistic_update(
    }
  
@@ -9,9 +9,9 @@ diff -upr ../mysql-8.0.13/storage/innobase/btr/btr0cur.cc /root/mysql-8.0.13/sto
    err = btr_cur_upd_lock_and_undo(flags, cursor, *offsets, update, cmpl_info,
                                    thr, mtr, &roll_ptr);
    if (err != DB_SUCCESS) {
-diff -upr ../mysql-8.0.13/storage/innobase/include/btr0cur.h /root/mysql-8.0.13/storage/innobase/include/btr0cur.h
---- ../mysql-8.0.13/storage/innobase/include/btr0cur.h	2018-10-07 16:44:22.000000000 +0800
-+++ /root/mysql-8.0.13/storage/innobase/include/btr0cur.h	2018-12-17 01:19:03.843701572 +0800
+diff -upr mysql-8.0.13/storage/innobase/include/btr0cur.h mysql-8.0.13_2/storage/innobase/include/btr0cur.h
+--- mysql-8.0.13/storage/innobase/include/btr0cur.h	2018-12-19 01:27:19.109559637 +0800
++++ mysql-8.0.13_2/storage/innobase/include/btr0cur.h	2018-12-19 01:38:57.416140887 +0800
 @@ -715,6 +715,7 @@ struct btr_cur_t {
    ulint tree_height{0};               /*!< Tree height if the search is done
                                        for a pessimistic insert or update
@@ -28,9 +28,9 @@ diff -upr ../mysql-8.0.13/storage/innobase/include/btr0cur.h /root/mysql-8.0.13/
    ulint low_match{0};                 /*!< if search mode was PAGE_CUR_LE,
                                        the number of matched fields to the
                                        first user record AT THE CURSOR or
-diff -upr ../mysql-8.0.13/storage/innobase/include/lock0lock.h /root/mysql-8.0.13/storage/innobase/include/lock0lock.h
---- ../mysql-8.0.13/storage/innobase/include/lock0lock.h	2018-10-07 16:44:22.000000000 +0800
-+++ /root/mysql-8.0.13/storage/innobase/include/lock0lock.h	2018-12-17 01:19:03.843701572 +0800
+diff -upr mysql-8.0.13/storage/innobase/include/lock0lock.h mysql-8.0.13_2/storage/innobase/include/lock0lock.h
+--- mysql-8.0.13/storage/innobase/include/lock0lock.h	2018-12-19 01:27:19.113559720 +0800
++++ mysql-8.0.13_2/storage/innobase/include/lock0lock.h	2018-12-19 01:38:57.416140887 +0800
 @@ -33,6 +33,7 @@ this program; if not, write to the Free
  #ifndef lock0lock_h
  #define lock0lock_h
@@ -58,9 +58,9 @@ diff -upr ../mysql-8.0.13/storage/innobase/include/lock0lock.h /root/mysql-8.0.1
 +
 +
  #endif
-diff -upr ../mysql-8.0.13/storage/innobase/include/os0thread-create.h /root/mysql-8.0.13/storage/innobase/include/os0thread-create.h
---- ../mysql-8.0.13/storage/innobase/include/os0thread-create.h	2018-10-07 16:44:22.000000000 +0800
-+++ /root/mysql-8.0.13/storage/innobase/include/os0thread-create.h	2018-12-17 01:19:03.843701572 +0800
+diff -upr mysql-8.0.13/storage/innobase/include/os0thread-create.h mysql-8.0.13_2/storage/innobase/include/os0thread-create.h
+--- mysql-8.0.13/storage/innobase/include/os0thread-create.h	2018-12-19 01:27:19.113559720 +0800
++++ mysql-8.0.13_2/storage/innobase/include/os0thread-create.h	2018-12-19 01:38:57.376140049 +0800
 @@ -155,6 +155,8 @@ void create_detached_thread(mysql_pfs_ke
    t.detach();
  }
@@ -70,9 +70,9 @@ diff -upr ../mysql-8.0.13/storage/innobase/include/os0thread-create.h /root/mysq
  #ifdef UNIV_PFS_THREAD
  #define os_thread_create(...) create_detached_thread(__VA_ARGS__)
  #else
-diff -upr ../mysql-8.0.13/storage/innobase/include/srv0srv.h /root/mysql-8.0.13/storage/innobase/include/srv0srv.h
---- ../mysql-8.0.13/storage/innobase/include/srv0srv.h	2018-10-07 16:44:22.000000000 +0800
-+++ /root/mysql-8.0.13/storage/innobase/include/srv0srv.h	2018-12-17 07:59:53.194420563 +0800
+diff -upr mysql-8.0.13/storage/innobase/include/srv0srv.h mysql-8.0.13_2/storage/innobase/include/srv0srv.h
+--- mysql-8.0.13/storage/innobase/include/srv0srv.h	2018-12-19 01:27:19.113559720 +0800
++++ mysql-8.0.13_2/storage/innobase/include/srv0srv.h	2018-12-19 01:38:57.412140804 +0800
 @@ -160,6 +160,8 @@ struct Srv_threads {
    /** true if master thread is created */
    bool m_master_thread_active;
@@ -90,9 +90,9 @@ diff -upr ../mysql-8.0.13/storage/innobase/include/srv0srv.h /root/mysql-8.0.13/
  #endif /* UNIV_PFS_THREAD */
  #endif /* !UNIV_HOTBACKUP */
  
-diff -upr ../mysql-8.0.13/storage/innobase/include/srv0start.h /root/mysql-8.0.13/storage/innobase/include/srv0start.h
---- ../mysql-8.0.13/storage/innobase/include/srv0start.h	2018-10-07 16:44:22.000000000 +0800
-+++ /root/mysql-8.0.13/storage/innobase/include/srv0start.h	2018-12-17 01:19:03.843701572 +0800
+diff -upr mysql-8.0.13/storage/innobase/include/srv0start.h mysql-8.0.13_2/storage/innobase/include/srv0start.h
+--- mysql-8.0.13/storage/innobase/include/srv0start.h	2018-12-19 01:27:19.113559720 +0800
++++ mysql-8.0.13_2/storage/innobase/include/srv0start.h	2018-12-19 01:38:57.404140636 +0800
 @@ -175,8 +175,6 @@ extern enum srv_shutdown_t srv_shutdown_
  
  /** Call exit(3) */
@@ -103,9 +103,9 @@ diff -upr ../mysql-8.0.13/storage/innobase/include/srv0start.h /root/mysql-8.0.1
 +
  
  #endif
-diff -upr ../mysql-8.0.13/storage/innobase/include/trx0trx.ic /root/mysql-8.0.13/storage/innobase/include/trx0trx.ic
---- ../mysql-8.0.13/storage/innobase/include/trx0trx.ic	2018-10-07 16:44:22.000000000 +0800
-+++ /root/mysql-8.0.13/storage/innobase/include/trx0trx.ic	2018-12-17 01:19:03.843701572 +0800
+diff -upr mysql-8.0.13/storage/innobase/include/trx0trx.ic mysql-8.0.13_2/storage/innobase/include/trx0trx.ic
+--- mysql-8.0.13/storage/innobase/include/trx0trx.ic	2018-12-19 01:27:19.117559804 +0800
++++ mysql-8.0.13_2/storage/innobase/include/trx0trx.ic	2018-12-19 01:38:57.412140804 +0800
 @@ -290,7 +290,7 @@ bool trx_is_high_priority(const trx_t *t
  @param[in] holder	Transaction holding the lock
  @return the transaction that will be rolled back, null don't care */
@@ -115,19 +115,18 @@ diff -upr ../mysql-8.0.13/storage/innobase/include/trx0trx.ic /root/mysql-8.0.13
    ut_ad(!trx_is_autocommit_non_locking(holder));
    ut_ad(!trx_is_autocommit_non_locking(requestor));
  
-diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/storage/innobase/lock/lock0lock.cc
---- ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc	2018-10-07 16:44:22.000000000 +0800
-+++ /root/mysql-8.0.13/storage/innobase/lock/lock0lock.cc	2018-12-19 00:47:54.904261465 +0800
-@@ -34,7 +34,7 @@ this program; if not, write to the Free
+diff -upr mysql-8.0.13/storage/innobase/lock/lock0lock.cc mysql-8.0.13_2/storage/innobase/lock/lock0lock.cc
+--- mysql-8.0.13/storage/innobase/lock/lock0lock.cc	2018-12-19 01:27:19.117559804 +0800
++++ mysql-8.0.13_2/storage/innobase/lock/lock0lock.cc	2018-12-19 01:38:57.420140971 +0800
+@@ -34,7 +34,6 @@ this program; if not, write to the Free
  
  #include <mysql/service_thd_engine_lock.h>
  #include <sys/types.h>
 -
-+#include <stdlib.h>
  #include <algorithm>
  #include <set>
  #include <unordered_map>
-@@ -57,6 +57,7 @@ this program; if not, write to the Free
+@@ -57,6 +56,7 @@ this program; if not, write to the Free
  #include "usr0sess.h"
  #include "ut0new.h"
  #include "ut0vec.h"
@@ -135,7 +134,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
  
  #include "my_dbug.h"
  #include "my_psi_config.h"
-@@ -118,7 +119,7 @@ class DeadlockChecker {
+@@ -118,7 +118,7 @@ class DeadlockChecker {
    @param trx the start transaction (start node)
    @param wait_lock lock that a transaction wants
    @param mark_start visited node counter */
@@ -144,7 +143,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
                    uint64_t mark_start)
        : m_cost(),
          m_start(trx),
-@@ -207,16 +208,16 @@ class DeadlockChecker {
+@@ -207,16 +207,16 @@ class DeadlockChecker {
  
    /** Select the victim transaction that should be rolledback.
    @return victim transaction */
@@ -164,7 +163,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
  
    /** Print transaction data to the deadlock file and possibly to stderr.
    @param trx transaction
-@@ -257,12 +258,17 @@ class DeadlockChecker {
+@@ -257,12 +257,17 @@ class DeadlockChecker {
  
    /** Joining transaction that is requesting a lock in an
    incompatible mode */
@@ -183,7 +182,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
    const lock_t *m_wait_lock;
  
    /**  Value of lock_mark_count at the start of the deadlock check. */
-@@ -454,6 +460,66 @@ static ulint lock_rec_lock_fold(const lo
+@@ -454,6 +459,66 @@ static ulint lock_rec_lock_fold(const lo
    return (lock_rec_fold(lock->rec_lock.space, lock->rec_lock.page_no));
  }
  
@@ -250,7 +249,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
  /** Resize the lock hash tables.
  @param[in]	n_cells	number of slots in lock hash table */
  void lock_sys_resize(ulint n_cells) {
-@@ -1063,7 +1129,7 @@ static trx_t *lock_rec_other_trx_holds_e
+@@ -1063,7 +1128,7 @@ static trx_t *lock_rec_other_trx_holds_e
           t = UT_LIST_GET_NEXT(trx_list, t)) {
        const lock_t *expl_lock =
            lock_rec_has_expl(precise_mode, block, heap_no, t);
@@ -259,7 +258,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
        if (expl_lock && expl_lock->trx != impl_trx &&
            !can_trx_be_ignored(expl_lock->trx)) {
          /* An explicit lock is held by trx other than
-@@ -1548,7 +1614,8 @@ dberr_t RecLock::deadlock_check(lock_t *
+@@ -1548,7 +1613,8 @@ dberr_t RecLock::deadlock_check(lock_t *
    ut_ad(lock->trx == m_trx);
    ut_ad(trx_mutex_own(m_trx));
  
@@ -269,7 +268,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
  
    /* Check the outcome of the deadlock test. It is possible that
    the transaction that blocked our lock was rolled back and we
-@@ -3905,7 +3972,8 @@ static dberr_t lock_table_enqueue_waitin
+@@ -3905,7 +3971,8 @@ static dberr_t lock_table_enqueue_waitin
    /* Enqueue the lock request that will wait to be granted */
    lock = lock_table_create(table, mode | LOCK_WAIT, trx);
  
@@ -279,7 +278,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
  
    if (victim_trx != 0) {
      ut_ad(victim_trx == trx);
-@@ -5910,7 +5978,8 @@ dberr_t lock_clust_rec_modify_check_and_
+@@ -5910,7 +5977,8 @@ dberr_t lock_clust_rec_modify_check_and_
    lock_mutex_enter();
  
    ut_ad(lock_table_has(thr_get_trx(thr), index->table, LOCK_IX));
@@ -289,7 +288,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
    err = lock_rec_lock(true, SELECT_ORDINARY, LOCK_X | LOCK_REC_NOT_GAP, block,
                        heap_no, index, thr);
  
-@@ -6912,7 +6981,15 @@ const lock_t *DeadlockChecker::get_first
+@@ -6912,7 +6980,15 @@ const lock_t *DeadlockChecker::get_first
                                             lock->rec_lock.page_no);
  
      /* Position on the first lock on the physical record.*/
@@ -305,7 +304,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
        lock = lock_rec_get_next_const(*heap_no, lock);
      }
  
-@@ -6982,14 +7059,14 @@ void DeadlockChecker::notify(const lock_
+@@ -6982,14 +7058,14 @@ void DeadlockChecker::notify(const lock_
  
  /** Select the victim transaction that should be rolledback.
  @return victim transaction */
@@ -322,7 +321,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
  
      victim = trx_arbitrate(m_start, m_wait_lock->trx);
  
-@@ -7011,9 +7088,9 @@ const trx_t *DeadlockChecker::select_vic
+@@ -7011,9 +7087,9 @@ const trx_t *DeadlockChecker::select_vic
  /** Looks iteratively for a deadlock. Note: the joining transaction may
  have been granted its lock by the deadlock checks.
  @return 0 if no deadlock else the victim transaction instance.*/
@@ -334,7 +333,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
  
    ut_ad(m_start != NULL);
    ut_ad(m_wait_lock != NULL);
-@@ -7022,15 +7099,17 @@ const trx_t *DeadlockChecker::search() {
+@@ -7022,15 +7098,17 @@ const trx_t *DeadlockChecker::search() {
  
    /* Look at the locks ahead of wait_lock in the lock queue. */
    ulint heap_no;
@@ -353,7 +352,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
        pop(lock, heap_no);
  
        lock = get_next_lock(lock, heap_no);
-@@ -7040,6 +7119,7 @@ const trx_t *DeadlockChecker::search() {
+@@ -7040,6 +7118,7 @@ const trx_t *DeadlockChecker::search() {
        break;
      } else if (lock == m_wait_lock) {
        /* We can mark this subtree as searched */
@@ -361,7 +360,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
        ut_ad(lock->trx->lock.deadlock_mark <= m_mark_start);
  
        lock->trx->lock.deadlock_mark = ++s_lock_mark_counter;
-@@ -7090,10 +7170,11 @@ const trx_t *DeadlockChecker::search() {
+@@ -7090,10 +7169,11 @@ const trx_t *DeadlockChecker::search() {
        m_too_deep = true;
        return (m_start);
  
@@ -375,7 +374,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
        ++m_cost;
  
        if (!push(lock, heap_no)) {
-@@ -7145,14 +7226,14 @@ void DeadlockChecker::rollback_print(con
+@@ -7145,14 +7225,14 @@ void DeadlockChecker::rollback_print(con
  }
  
  /** Rollback transaction selected as the victim. */
@@ -394,7 +393,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
  
    trx->owns_mutex = true;
  
-@@ -7162,7 +7243,6 @@ void DeadlockChecker::trx_rollback() {
+@@ -7162,7 +7242,6 @@ void DeadlockChecker::trx_rollback() {
  
    trx->owns_mutex = false;
  
@@ -402,7 +401,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
  }
  
  /** Checks if a joining lock request results in a deadlock. If a deadlock is
-@@ -7199,9 +7279,9 @@ const trx_t *DeadlockChecker::check_and_
+@@ -7199,9 +7278,9 @@ const trx_t *DeadlockChecker::check_and_
    its state can only be changed by this thread, which is
    currently associated with the transaction. */
  
@@ -414,7 +413,7 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
  
    /* Try and resolve as many deadlocks as possible. */
    do {
-@@ -7214,35 +7294,49 @@ const trx_t *DeadlockChecker::check_and_
+@@ -7214,35 +7293,49 @@ const trx_t *DeadlockChecker::check_and_
      transaction that is holding the lock that the joining
      transaction wants. */
      if (checker.is_too_deep()) {
@@ -474,9 +473,9 @@ diff -upr ../mysql-8.0.13/storage/innobase/lock/lock0lock.cc /root/mysql-8.0.13/
  
    return (victim_trx);
  }
-diff -upr ../mysql-8.0.13/storage/innobase/read/read0read.cc /root/mysql-8.0.13/storage/innobase/read/read0read.cc
---- ../mysql-8.0.13/storage/innobase/read/read0read.cc	2018-10-07 16:44:22.000000000 +0800
-+++ /root/mysql-8.0.13/storage/innobase/read/read0read.cc	2018-12-17 01:19:03.847701656 +0800
+diff -upr mysql-8.0.13/storage/innobase/read/read0read.cc mysql-8.0.13_2/storage/innobase/read/read0read.cc
+--- mysql-8.0.13/storage/innobase/read/read0read.cc	2018-12-19 01:27:19.117559804 +0800
++++ mysql-8.0.13_2/storage/innobase/read/read0read.cc	2018-12-19 01:38:57.424141055 +0800
 @@ -551,6 +551,8 @@ void MVCC::view_open(ReadView *&view, tr
    if (view != NULL) {
      view->prepare(trx->id);
@@ -486,9 +485,9 @@ diff -upr ../mysql-8.0.13/storage/innobase/read/read0read.cc /root/mysql-8.0.13/
      UT_LIST_ADD_FIRST(m_views, view);
  
      ut_ad(!view->is_closed());
-diff -upr ../mysql-8.0.13/storage/innobase/row/row0ins.cc /root/mysql-8.0.13/storage/innobase/row/row0ins.cc
---- ../mysql-8.0.13/storage/innobase/row/row0ins.cc	2018-10-07 16:44:22.000000000 +0800
-+++ /root/mysql-8.0.13/storage/innobase/row/row0ins.cc	2018-12-17 01:19:03.847701656 +0800
+diff -upr mysql-8.0.13/storage/innobase/row/row0ins.cc mysql-8.0.13_2/storage/innobase/row/row0ins.cc
+--- mysql-8.0.13/storage/innobase/row/row0ins.cc	2018-12-19 01:27:19.121559887 +0800
++++ mysql-8.0.13_2/storage/innobase/row/row0ins.cc	2018-12-19 01:38:57.428141139 +0800
 @@ -1830,6 +1830,7 @@ static ibool row_ins_dupl_error_with_rec
  
    matched_fields = 0;
@@ -545,9 +544,9 @@ diff -upr ../mysql-8.0.13/storage/innobase/row/row0ins.cc /root/mysql-8.0.13/sto
      err = row_ins_clust_index_entry_by_modify(&pcur, flags, mode, &offsets,
                                                &offsets_heap, entry_heap, entry,
                                                thr, &mtr);
-diff -upr ../mysql-8.0.13/storage/innobase/srv/srv0srv.cc /root/mysql-8.0.13/storage/innobase/srv/srv0srv.cc
---- ../mysql-8.0.13/storage/innobase/srv/srv0srv.cc	2018-10-07 16:44:22.000000000 +0800
-+++ /root/mysql-8.0.13/storage/innobase/srv/srv0srv.cc	2018-12-17 01:19:03.847701656 +0800
+diff -upr mysql-8.0.13/storage/innobase/srv/srv0srv.cc mysql-8.0.13_2/storage/innobase/srv/srv0srv.cc
+--- mysql-8.0.13/storage/innobase/srv/srv0srv.cc	2018-12-19 01:27:19.121559887 +0800
++++ mysql-8.0.13_2/storage/innobase/srv/srv0srv.cc	2018-12-19 01:38:57.428141139 +0800
 @@ -1754,6 +1754,8 @@ const char *srv_any_background_threads_a
      thread_active = "buf_dump_thread";
    } else if (srv_threads.m_buf_resize_thread_active) {
@@ -568,9 +567,9 @@ diff -upr ../mysql-8.0.13/storage/innobase/srv/srv0srv.cc /root/mysql-8.0.13/sto
  /** Do the actual purge operation.
   @return length of history list before the last purge batch. */
  static ulint srv_do_purge(
-diff -upr ../mysql-8.0.13/storage/innobase/srv/srv0start.cc /root/mysql-8.0.13/storage/innobase/srv/srv0start.cc
---- ../mysql-8.0.13/storage/innobase/srv/srv0start.cc	2018-10-07 16:44:22.000000000 +0800
-+++ /root/mysql-8.0.13/storage/innobase/srv/srv0start.cc	2018-12-17 07:58:29.456686014 +0800
+diff -upr mysql-8.0.13/storage/innobase/srv/srv0start.cc mysql-8.0.13_2/storage/innobase/srv/srv0start.cc
+--- mysql-8.0.13/storage/innobase/srv/srv0start.cc	2018-12-19 01:27:19.121559887 +0800
++++ mysql-8.0.13_2/storage/innobase/srv/srv0start.cc	2018-12-19 01:38:57.428141139 +0800
 @@ -97,7 +97,6 @@ this program; if not, write to the Free
  #include "dict0crea.h"
  #include "dict0load.h"
